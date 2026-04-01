@@ -1,0 +1,14 @@
+.DS_Store
+*.pyc
+__pycache__/
+.env
+*.pth
+*.bin
+*.safetensors
+node_modules/
+.vscode/
+.idea/
+node_modules/
+.next/
+out/
+tsconfig.tsbuildinfo

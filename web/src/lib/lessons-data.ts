@@ -1,0 +1,53 @@
+/** 课程 slug → 仓库根目录 docs/ 下的文件名（与 GitHub 文档一致） */
+export const LESSON_FILES: Record<string, string> = {
+  L01: "L01-什么是大语言模型.md",
+  L02: "L02-Transformer全景图.md",
+  L03: "L03-PyTorch快速上手.md",
+  L04: "L04-MiniMind项目导览.md",
+  L05: "L05-Tokenizer分词器.md",
+  L06: "L06-词嵌入Embedding.md",
+  L07: "L07-RMSNorm归一化.md",
+  L08: "L08-RoPE旋转位置编码.md",
+  L09: "L09-注意力机制与GQA.md",
+  L10: "L10-前馈网络与SwiGLU.md",
+  L11: "L11-数据处理流水线.md",
+  L12: "L12-预训练Pretrain.md",
+  L13: "L13-监督微调SFT.md",
+  L14: "L14-LoRA高效微调.md",
+  L15: "L15-知识蒸馏.md",
+  L16: "L16-完整模型组装.md",
+  L17: "L17-DPO偏好优化.md",
+  L18: "L18-PPO与GRPO强化学习.md",
+  L19: "L19-MoE混合专家模型.md",
+  L20: "L20-推理优化.md",
+  L21: "L21-部署与应用.md",
+  L22: "L22-面试通关指南.md",
+};
+
+/** 固定顺序，用于上一课 / 下一课导航 */
+export const LESSON_ORDER = [
+  "L01",
+  "L02",
+  "L03",
+  "L04",
+  "L05",
+  "L06",
+  "L07",
+  "L08",
+  "L09",
+  "L10",
+  "L11",
+  "L12",
+  "L13",
+  "L14",
+  "L15",
+  "L16",
+  "L17",
+  "L18",
+  "L19",
+  "L20",
+  "L21",
+  "L22",
+] as const satisfies readonly (keyof typeof LESSON_FILES)[];
+
+export type LessonSlug = keyof typeof LESSON_FILES;

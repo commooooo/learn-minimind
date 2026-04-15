@@ -17,7 +17,14 @@
 """
 
 import argparse
+import os
 import sys
+
+# Windows 上 weasyprint 需要显式加载 GTK DLL 目录
+if sys.platform == "win32":
+    _gtk_bin = r"E:\GTK3-Runtime Win64\bin"
+    if os.path.isdir(_gtk_bin):
+        os.add_dll_directory(_gtk_bin)
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -77,9 +84,9 @@ def build_with_weasyprint():
             pdf_path = OUTPUT_DIR / (md_path.stem + ".pdf")
             WHTML(string=full_html, base_url=str(ROOT)).write_pdf(str(pdf_path))
             count += 1
-            print(f"  ✓ {pdf_path.name}")
+            print(f"  [ok] {pdf_path.name}")
 
-    print(f"\n✅ 已生成 {count} 个 PDF 文件到 {OUTPUT_DIR}")
+    print(f"\n完成：已生成 {count} 个 PDF 文件到 {OUTPUT_DIR}")
 
 
 def build_with_md2pdf():
@@ -106,11 +113,11 @@ def build_with_md2pdf():
                     base_url=str(ROOT),
                 )
                 count += 1
-                print(f"  ✓ {pdf_path.name}")
+                print(f"  [ok] {pdf_path.name}")
             except Exception as e:
-                print(f"  ✗ {md_path.name}: {e}")
+                print(f"  [fail] {md_path.name}: {e}")
 
-    print(f"\n✅ 已生成 {count} 个 PDF 文件到 {OUTPUT_DIR}")
+    print(f"\n完成：已生成 {count} 个 PDF 文件到 {OUTPUT_DIR}")
 
 
 def build_combined_pdf():
@@ -149,7 +156,7 @@ def build_combined_pdf():
 
     pdf_path = OUTPUT_DIR / "MiniMind面试学习指南-完整版.pdf"
     WHTML(string=combined, base_url=str(ROOT)).write_pdf(str(pdf_path))
-    print(f"✅ 完整版 PDF: {pdf_path}")
+    print(f"完整版 PDF: {pdf_path}")
 
 
 if __name__ == "__main__":

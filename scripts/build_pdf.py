@@ -50,6 +50,9 @@ th { background: #eef2ff; }
 blockquote { border-left: 3px solid #4f46e5; background: #eef2ff; padding: 8pt 12pt; margin: 8pt 0; }
 img { max-width: 100%; height: auto; }
 strong { color: #4f46e5; }
+/* details/summary（课后题答案） */
+details { border-left: 3px solid #10b981; background: #f0fdf4; padding: 8pt 12pt; margin: 8pt 0; border-radius: 0 6pt 6pt 0; }
+details summary { font-weight: 600; color: #059669; margin-bottom: 6pt; }
 /* MathML */
 math { font-size: 1em; }
 math[display="block"] { display: block; text-align: center; margin: 1em 0; overflow-x: auto; }
@@ -179,6 +182,8 @@ def build_with_playwright(source_dirs=None, out_suffix=""):
 
                     page = browser.new_page()
                     page.set_content(full_html, wait_until="load")
+                    # 强制展开所有 <details>，确保答案在 PDF 中可见
+                    page.evaluate("document.querySelectorAll('details').forEach(d => d.open = true)")
                     pdf_path = OUTPUT_DIR / (md_path.stem + out_suffix + ".pdf")
                     page.pdf(
                         path=str(pdf_path),
@@ -286,6 +291,7 @@ def build_combined_pdf(engine: str = "playwright"):
             browser = pw.chromium.launch()
             page = browser.new_page()
             page.set_content(combined_html, wait_until="load")
+            page.evaluate("document.querySelectorAll('details').forEach(d => d.open = true)")
             page.pdf(
                 path=str(pdf_path),
                 format="A4",
